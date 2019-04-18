@@ -34,7 +34,7 @@ var SlidingPuzzle = (function(){
 				this.showPmap();
 			},
 			"checkChangePos":function(k1,k2){
-				if(this.getNeighborhoodKs(k2).indexOf(k1)==-1){
+				if(k1 == k2 ||this.getNeighborhoodKs(k2).indexOf(k1)==-1){
 					// console.error("position index out range exception");
 					return false;
 				}
@@ -42,11 +42,16 @@ var SlidingPuzzle = (function(){
 			},
 			"changePos":function(k1,k2){
 				if(!this.checkChangePos(k1,k2)){
-					return;
+					return false;
 				}
 				var p = this.pzMap[k2];
 				this.pzMap[k2] = this.pzMap[k1]
 				this.pzMap[k1] = p;
+				return true;
+			},
+			// k를 lastK와 위치 바꾼다.
+			"moveKtoLastK":function(k){
+				return this.changePos(k,this.lastK);
 			},
 			//top,right,bottom,left
 			"getNeighborhoodKs":function(k){
