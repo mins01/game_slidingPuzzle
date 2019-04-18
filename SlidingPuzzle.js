@@ -13,6 +13,14 @@ var SlidingPuzzle = (function(){
 				return this.createPuzzle(w,h);
 			},
 			"createPuzzle":function(w,h){
+				w = parseInt(w,10);
+				h = parseInt(h,10);
+				if(w<2){
+					console.error("width required number bigger then 2");
+				}
+				if(h<2){
+					console.error("height required number bigger then 2");
+				}
 				this.w = w;
 				this.h = h;
 				this.pzMap = new Array(w*h);
@@ -20,6 +28,7 @@ var SlidingPuzzle = (function(){
 				for(var i=0,m=this.pzMap.length;i<m;i++){
 					this.pzMap[i]=i;
 				}
+				
 			},
 			"sufflePzMap":function(n){
 				this.showPmap();
