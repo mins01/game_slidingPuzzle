@@ -23,22 +23,22 @@ var SlidingPuzzle = (function(){
 				}
 				this.w = w;
 				this.h = h;
-				this.pzMap = new Array(w*h);
-				this.lastK = this.pzMap.length-1;
-				for(var i=0,m=this.pzMap.length;i<m;i++){
-					this.pzMap[i]=i;
+				this.ks = new Array(w*h);
+				this.lastK = this.ks.length-1;
+				for(var i=0,m=this.ks.length;i<m;i++){
+					this.ks[i]=i;
 				}
 				
 			},
-			"sufflePzMap":function(n){
+			"suffleKs":function(n){
 				this.showPmap();
 				while(n--){
-						this.suffleOncePzMap();
+						this.suffleOnceKs();
 				}
 			},
-			"suffleOncePzMap":function(){
+			"suffleOnceKs":function(){
 				var k = this.shuffleArray(this.removeNullKs(this.getNeighborhoodKs(this.lastK)))[0];
-				console.log(this.lastK+" to "+k);
+				// console.log(this.lastK+" to "+k);
 				this.changePos(this.lastK,k);
 				this.showPmap();
 			},
@@ -53,9 +53,9 @@ var SlidingPuzzle = (function(){
 				if(!this.checkChangePos(k1,k2)){
 					return false;
 				}
-				var p = this.pzMap[k2];
-				this.pzMap[k2] = this.pzMap[k1]
-				this.pzMap[k1] = p;
+				var p = this.ks[k2];
+				this.ks[k2] = this.ks[k1]
+				this.ks[k1] = p;
 				return true;
 			},
 			// k를 lastK와 위치 바꾼다.
@@ -64,19 +64,19 @@ var SlidingPuzzle = (function(){
 			},
 			//top,right,bottom,left
 			"getNeighborhoodKs":function(k){
-				var p = this.pzMap[k]; //포지션 찾기
+				var p = this.ks[k]; //포지션 찾기
 				var ks = [-1,-1,-1,-1];
 				if(p-this.w>=0){
-					ks[0] = this.pzMap.indexOf(p-this.w);
+					ks[0] = this.ks.indexOf(p-this.w);
 				}
 				if((p+1)%this.w!=0){
-					ks[1] = this.pzMap.indexOf(p+1);
+					ks[1] = this.ks.indexOf(p+1);
 				}
 				if(p+this.w<=this.lastK){
-					ks[2] = this.pzMap.indexOf(p+this.w);
+					ks[2] = this.ks.indexOf(p+this.w);
 				}
 				if(p%this.w!=0){
-					ks[3] = this.pzMap.indexOf(p-1);
+					ks[3] = this.ks.indexOf(p-1);
 				}
 				return ks;
 			},
@@ -99,21 +99,28 @@ var SlidingPuzzle = (function(){
 				}
 				return a;
 			},
+			"getPs":function(){
+				return this.convertKstoPs(this.ks)
+			},
+			"convertKstoPs":function(ks){
+				var ps = new Array(ks.length); 
+				for(var i=0,m=ks.length;i<m;i++){
+					ps[ks[i]] = i;
+				}
+				return ps
+			},
 			"showPmap":function(){
 				//-- k-p 배열에서 p-k 배열로 만들어서 출력
-				var ps = new Array(this.w*this.h); 
-				for(var i=0,m=this.pzMap.length;i<m;i++){
-					ps[this.pzMap[i]] = i;
-				}
+				var ps = this.convertKstoPs(this.ks);
 				var msg = [];
 				for(var i=0,m=ps.length;i<m;i+=this.w){
 					msg.push(ps.slice(i,i+this.w).toString());
 				}
-				console.log(msg.join("\n"));
+				// console.log(msg.join("\n"));
 			},
 			"checkFinish":function(){
-				for(var i=0,m=this.pzMap.length;i<m;i++){
-					if(i != this.pzMap[i]) return false;
+				for(var i=0,m=this.ks.length;i<m;i++){
+					if(i != this.ks[i]) return false;
 				}
 				return true;
 			}
