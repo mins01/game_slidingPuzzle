@@ -122,6 +122,7 @@
 	text-align: center;
 	justify-content: center;  /* 가로 중앙 */
 	align-items: center; /* 세로 중앙 */
+	cursor:default;
 }
 #clock{
 	width:300px;

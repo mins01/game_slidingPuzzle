@@ -9,6 +9,7 @@ var SlidingPuzzleGame = (function(){
 			this.sp = sp;
 			this.initTags();
 			this.initEvent();
+			this.stopSuffle();
 			this.clock.reset();
 			this.msgbox.show("sliding puzzle");
 		},
@@ -65,6 +66,7 @@ var SlidingPuzzleGame = (function(){
 				
 			}
 		},
+		"tmSuffle":null,
 		"suffle":function(){
 			// sp.suffleKs(sp.ks.length*4);
 			
@@ -113,14 +115,18 @@ var SlidingPuzzleGame = (function(){
 					});
 				});
 			})
-			var tm = setInterval(function(){
+			this.tmSuffle = setInterval(function(){
 				if(fns.length>0){
 					var fn = fns.shift();
 					fn();
 				}else{
-					clearInterval(tm);
+					thisC.stopSuffle();
 				}
 			},10)
+		},
+		"stopSuffle":function(){
+			if(this.tmSuffle) clearInterval(this.tmSuffle);
+			this.tmSuffle = null;
 		},
 		"msgbox":{
 			"show":function(msg){

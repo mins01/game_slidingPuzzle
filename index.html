@@ -30,7 +30,7 @@
 	var spg = SlidingPuzzleGame;
 	$(function(){
 		spg.pzbox = document.querySelector("#pzbox");
-		spg.init(3,3);
+		spg.init(4,4);
 		// sp = new SlidingPuzzle(3,3);
 		// sp.showPmap();	
 		// sp2 = new SlidingPuzzle(1,3);
@@ -56,7 +56,7 @@
 </head>
 <body>
 	<div class="container">
-		<h1 class="text-center">sliding puzzle</h1>
+		<h1 class="text-center">sliding puzzle<sup><small><a href="" target="_blank" >🚀</a></small></sup></h1>
 		<div class="text-center m-1">
 			<button class="btn btn-info m-1" type="button" onclick="spg.init(3,3)" >3x3</button>
 			<button class="btn btn-info m-1" type="button" onclick="spg.init(4,4)" >4x4</button>
@@ -78,7 +78,8 @@
 		</div>
 
 		<div class="text-center m-1">
-			<button class="btn btn-warning m-1 btn-lg" type="button" onclick="spg.suffle()" ><b>suffle &amp; start</b></button>	
+			<button class="btn btn-warning m-1 btn-lg" type="button" onclick="spg.suffle()" ><b>suffle &amp; start</b></button>
+			<a class="btn btn-warning m-1 btn-lg"  href="http://mins01.com" target="_blank" title="developer homepage" >🏠</a>
 		</div>
 		
 	</div>
