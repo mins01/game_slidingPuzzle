@@ -1,6 +1,11 @@
 @charset "UTF-8";
 /* colors: https://color.adobe.com/ko/explore/most-popular/?time=all%3Ftime%3Dall&page=2*/
-
+#pzbox{
+	position: relative;
+	width: 310px;
+	height: 310px;
+	margin: 0 auto;
+}
 .pz-grid{
 	width: 300px;
 	height: 300px;
@@ -9,13 +14,14 @@
 	position: relative;
 	border:5px solid #333;
 	border-radius: 10px;
+	box-sizing: content-box;
 }
 .pz-grid[data-w="3"] > .pz-piece{
 	font-size: 50px;
-	width: 33.3333%
+	width: 100px
 }
 .pz-grid[data-h="3"] > .pz-piece{
-	height: 33.3333%
+	height: 100px
 }
 .pz-grid[data-w="4"] > .pz-piece{
 	font-size: 30px;
@@ -81,27 +87,52 @@
 	/* pointer-events: none;  */
 	cursor: not-allowed;
 }
-.pz-piece::before{
+.pz-piece > .pz-block{
+	position: absolute;
+	left:0;right:0;bottom:0;top:0;
+	border: 2px solid #fff;
+	margin: 2px;
+	color: #fff;
+	transition: all  0.2s ease-out;
+	border-radius: 10%;
+}
+/* .pz-piece::before */
+.pz-piece > .pz-block::before
+{
 	content: attr(data-label);
 	position: absolute;
 	left:0;right:0;bottom:0;top:0;
 	display: flex;
 	justify-content: center;  /* 가로 중앙 */
 	align-items: center; /* 세로 중앙 */
-	border: 2px solid #fff;
-	margin: 2px;
-	background-color: #000;
-	color: #fff;
-	transition: all  0.2s ease-out;
-	border-radius: 10%;
 }
-.pz-piece[data-matched]::before{
+/* .pz-piece[data-matched]::before */
+.pz-piece[data-matched] > .pz-block::before
+{
 	border-color: #000;
 	background-color: #fff;
 	color: #000;
 
 }
-
+/* 이미지 사용시 */
+#pzbox[data-bg-image] .pz-block{
+	/* background-image: url("imgs/test_3x3.png"); */
+	background-repeat: no-repeat;
+	background-size: 300px 300px ;
+	background-color: transparent;
+}
+#pzbox[data-bg-image] .pz-block::before{
+	content: none;
+}
+#pzbox[data-bg-image="1"] .pz-block{
+	background-image: url("https://scontent-icn1-1.cdninstagram.com/vp/9e47f32e81896d65ef3a1a8659edc3da/5D743D03/t51.2885-15/e35/57799304_431890114228166_6123388005981534783_n.jpg?_nc_ht=scontent-icn1-1.cdninstagram.com");
+}
+#pzbox[data-bg-image="2"] .pz-block{
+	background-image: url("https://scontent-icn1-1.cdninstagram.com/vp/9144792db3c7c6d7be8115d7d7c3bc86/5D71491D/t51.2885-15/e35/54511618_127399738352375_4865131275335410946_n.jpg?_nc_ht=scontent-icn1-1.cdninstagram.com");
+}
+#pzbox[data-bg-image="3"] .pz-block{
+	background-image: url("https://scontent-icn1-1.cdninstagram.com/vp/da7668000012821cad1ea744385c48a1/5D3F4AE8/t51.2885-15/e35/46265852_333913247406259_450068656306401594_n.jpg?_nc_ht=scontent-icn1-1.cdninstagram.com");
+}
 
 /* 메세지 박스*/
 #msgboxbox{position: relative;
@@ -111,10 +142,12 @@
 }
 #msgbox{
 	position: absolute;
-	width: 300px;height: 300px;
+	/* width: 300px;height: 300px; */
 	border:5px solid #000;
+	left: 0;right: 0;top:0;bottom: 0;
+	
 	border-radius: 10px;
-	background-color: rgba(0,0,0,0.8);
+	background-color: rgba(0,0,0,0.6);
 	color:#fff;
 	font-weight: bold;
 	font-size: 50px;
@@ -123,9 +156,11 @@
 	justify-content: center;  /* 가로 중앙 */
 	align-items: center; /* 세로 중앙 */
 	cursor:default;
+	z-index: 9;
 }
 #clock{
 	width:300px;
+	box-sizing: content-box;
 	margin:0 auto;
 	margin-bottom: 10px;
 	border:5px solid #000;
@@ -146,4 +181,9 @@
 	font-size:0.5em;
 	font-weight: normal;
 
+}
+
+
+.btn[data-toggle]{
+	color:red;
 }

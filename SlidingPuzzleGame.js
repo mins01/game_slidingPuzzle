@@ -4,26 +4,49 @@ var SlidingPuzzleGame = (function(){
 		"sp":null ,
 		"pzbox":null,
 		"pzGrid":null,
-		"init":function(w,h){
-			sp = new SlidingPuzzle(w,h);
-			this.sp = sp;
+		"init":function(){
 			this.initTags();
 			this.initEvent();
 			this.stopSuffle();
+		},
+		"create":function(w,h){
+			if(this.isSuffling()){
+				return;
+			}
+			
+			this.stopSuffle();
+			sp = new SlidingPuzzle(w,h);
+			this.sp = sp;
+			this.initAddTags();
+			this.hideAnswer();
+			
 			this.clock.reset();
 			this.msgbox.show("sliding puzzle");
 		},
 		"pzPieces":null,
 		"initTags":function(){
-			$(this.pzbox).html("");
-			$(this.pzbox).append('<div class="pz-grid" data-w="'+sp.w+'" data-h="'+sp.h+'"></div>');
 			this.pzGrid = this.pzbox.querySelector(".pz-grid");
+		},
+		"initAddTags":function(){
+			$(this.pzGrid).html("").attr("data-w",sp.w).attr("data-h",sp.h);
 			for(var i=0,m=sp.w*sp.h;i<m;i++){
-				$(this.pzGrid).append('<div class="pz-piece" data-k="'+i+'"  data-p="'+i+'"  data-label="'+(i+1)+'"   ></div>')
+				$(this.pzGrid).append('<div class="pz-piece" data-k="'+i+'"  data-p="'+i+'"    ><div class="pz-block"  data-label="'+(i+1)+'"></div></div>')
 			}
 			$(this.pzGrid).find('.pz-piece[data-k="'+sp.lastK+'"]').attr('data-lastK',"");
 			this.pzPieces = $(this.pzGrid).find('.pz-piece[data-k]');
+			this.initBgImgPos();
 			this.draw();
+		},
+		"initBgImgPos":function(){
+			var unitW = 100/(sp.w-1);
+			var unitH = 100/(sp.h-1);
+			for(var i=0,m=this.pzPieces.length;i<m;i++){
+				var $pzBlock = $(this.pzPieces[i]).find('.pz-block');
+				var y = Math.floor(i/sp.w)
+				var x = i%sp.w;
+				$pzBlock.css('backgroundPositionX',x*unitW+"%")
+				.css('backgroundPositionY',y*unitW+"%");
+			}
 		},
 		"cliclable":true,
 		"initEvent":function(){
@@ -43,6 +66,9 @@ var SlidingPuzzleGame = (function(){
 		},
 		"draw":function(){
 			var ps = sp.getPs();
+			this.drawByPs(ps)
+		},
+		"drawByPs":function(ps){
 			for(var i=0,m=ps.length;i<m;i++){
 				// $(this.pzGrid).append(this.pzPieces[ps[i]]);
 				$(this.pzPieces[ps[i]]).attr("data-matched",(i==ps[i])?"":null);
@@ -51,9 +77,17 @@ var SlidingPuzzleGame = (function(){
 				var top = (Math.floor(i/sp.h)*100/sp.h)+"%";
 				$(this.pzPieces[ps[i]]).css('left',left);
 				$(this.pzPieces[ps[i]]).css('top',top);
-				
-				
+			}			
+		},
+		"showAnswer":function(){
+			var ps = new Array(sp.ks.length);
+			for(var i=0,m=ps.length;i<m;i++){
+				ps[i]=i;
 			}
+			this.drawByPs(ps);
+		},
+		"hideAnswer":function(){
+			this.draw();
 		},
 		"checkFinish":function(){
 			var thisC = this;
@@ -66,6 +100,9 @@ var SlidingPuzzleGame = (function(){
 				
 			}
 		},
+		"isSuffling":function(){
+			return $(this.pzGrid).attr("data-shuffling")!=null || this.tmSuffle;
+		},
 		"tmSuffle":null,
 		"suffle":function(){
 			// sp.suffleKs(sp.ks.length*4);
@@ -73,8 +110,8 @@ var SlidingPuzzleGame = (function(){
 			var thisC = this;
 			var n = sp.ks.length*10
 			var fns = []; 
-			
-			if($(thisC.pzGrid).attr("data-shuffling")!=null){
+			this.hideAnswer();
+			if(this.isSuffling()){
 				console.error("shuffling");
 				return;
 			}
@@ -104,11 +141,10 @@ var SlidingPuzzleGame = (function(){
 							thisC.msgbox.hide(1000,function(){
 								thisC.msgbox.show("Go!");
 								thisC.msgbox.hide(1000,function(){
-									$(thisC.pzGrid).attr("data-shuffling",null);	
-									$(thisC.pzGrid).attr("data-transition-speed",null);	
 									thisC.cliclable = true;
 									thisC.clock.start();
-									
+									$(thisC.pzGrid).attr("data-shuffling",null);	
+									$(thisC.pzGrid).attr("data-transition-speed",null);	
 								});
 							});
 						});
@@ -130,13 +166,12 @@ var SlidingPuzzleGame = (function(){
 		},
 		"msgbox":{
 			"show":function(msg){
-				$("#msgbox").text(msg);
-				$("#msgboxbox").show();	
+				$("#msgbox").text(msg).show();
 			},
 			"hide":function(time,fn){
 				if(!time) time = 0;
 				setTimeout(function(){
-					$("#msgboxbox").hide();	
+					$("#msgbox").hide();	
 					if(fn){fn()}
 				},time);	
 			}
@@ -162,6 +197,14 @@ var SlidingPuzzleGame = (function(){
 			"sync":function(){
 				var time = (new Date()).getTime() - this.stTime;
 				$("#clock").text((time/1000).toFixed(1));
+			}
+			
+		},
+		"setBgImage":function(n){
+			if(n==0){
+				$(this.pzbox).attr("data-bg-image",null);	
+			}else{
+				$(this.pzbox).attr("data-bg-image",n);
 			}
 			
 		}
