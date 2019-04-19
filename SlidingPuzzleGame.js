@@ -10,6 +10,7 @@ var SlidingPuzzleGame = (function(){
 			this.initTags();
 			this.initEvent();
 			this.clock.reset();
+			this.msgbox.show("sliding puzzle");
 		},
 		"pzPieces":null,
 		"initTags":function(){
@@ -59,7 +60,7 @@ var SlidingPuzzleGame = (function(){
 				setTimeout(function(){
 					thisC.clock.stop();
 					thisC.msgbox.show("FINISH!!");
-					thisC.msgbox.hide(2000);
+					// thisC.msgbox.hide(2000);
 				},500);
 				
 			}
@@ -70,6 +71,14 @@ var SlidingPuzzleGame = (function(){
 			var thisC = this;
 			var n = sp.ks.length*10
 			var fns = []; 
+			
+			if($(thisC.pzGrid).attr("data-shuffling")!=null){
+				console.error("shuffling");
+				return;
+			}
+			this.clock.reset();
+
+			
 			fns.push(function(){
 				thisC.msgbox.show("shuffling");
 				$(thisC.pzGrid).attr("data-shuffling","");	
@@ -83,17 +92,24 @@ var SlidingPuzzleGame = (function(){
 				});
 			}
 			fns.push(function(){
-				thisC.msgbox.show("Ready..");
-				$(thisC.pzGrid).attr("data-shuffling",null);	
-				$(thisC.pzGrid).attr("data-transition-speed",null);	
-				thisC.cliclable = true;
-			})
-			fns.push(function(){
 				thisC.msgbox.show("Ready");
-				thisC.msgbox.hide(3000,function(){
-					thisC.msgbox.show("Go!");
+				thisC.msgbox.hide(1000,function(){
+					thisC.msgbox.show("3");
 					thisC.msgbox.hide(1000,function(){
-						thisC.clock.start();
+						thisC.msgbox.show("2");
+						thisC.msgbox.hide(1000,function(){
+							thisC.msgbox.show("1");
+							thisC.msgbox.hide(1000,function(){
+								thisC.msgbox.show("Go!");
+								thisC.msgbox.hide(1000,function(){
+									$(thisC.pzGrid).attr("data-shuffling",null);	
+									$(thisC.pzGrid).attr("data-transition-speed",null);	
+									thisC.cliclable = true;
+									thisC.clock.start();
+									
+								});
+							});
+						});
 					});
 				});
 			})
@@ -105,9 +121,6 @@ var SlidingPuzzleGame = (function(){
 					clearInterval(tm);
 				}
 			},10)
-			
-			
-			
 		},
 		"msgbox":{
 			"show":function(msg){

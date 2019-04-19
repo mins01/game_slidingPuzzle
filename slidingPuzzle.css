@@ -119,6 +119,7 @@
 	font-weight: bold;
 	font-size: 50px;
 	display: flex;
+	text-align: center;
 	justify-content: center;  /* 가로 중앙 */
 	align-items: center; /* 세로 중앙 */
 }
