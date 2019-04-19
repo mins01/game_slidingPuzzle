@@ -130,7 +130,7 @@ var SlidingPuzzleGame = (function(){
 				var thisC = this;
 				this.tm = setInterval(function(){
 					thisC.sync();
-				},10);
+				},100);
 			},
 			"reset":function(){
 				this.stop();
@@ -142,7 +142,7 @@ var SlidingPuzzleGame = (function(){
 			},
 			"sync":function(){
 				var time = (new Date()).getTime() - this.stTime;
-				$("#clock").text((time/100).toFixed(1));
+				$("#clock").text((time/1000).toFixed(1));
 			}
 			
 		}
