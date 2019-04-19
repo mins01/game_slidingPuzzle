@@ -17,7 +17,7 @@ var SlidingPuzzleGame = (function(){
 			$(this.pzbox).append('<div class="pz-grid" data-w="'+sp.w+'" data-h="'+sp.h+'"></div>');
 			this.pzGrid = this.pzbox.querySelector(".pz-grid");
 			for(var i=0,m=sp.w*sp.h;i<m;i++){
-				$(this.pzGrid).append('<div class="pz-piece" data-k="'+i+'"  data-p="'+i+'"  ></div>')
+				$(this.pzGrid).append('<div class="pz-piece" data-k="'+i+'"  data-p="'+i+'"  data-label="'+(i+1)+'"   ></div>')
 			}
 			$(this.pzGrid).find('.pz-piece[data-k="'+sp.lastK+'"]').attr('data-lastK',"");
 			this.pzPieces = $(this.pzGrid).find('.pz-piece[data-k]');
