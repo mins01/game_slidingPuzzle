@@ -9,6 +9,7 @@ var SlidingPuzzleGame = (function(){
 			this.sp = sp;
 			this.initTags();
 			this.initEvent();
+			this.clock.reset();
 		},
 		"pzPieces":null,
 		"initTags":function(){
@@ -131,9 +132,13 @@ var SlidingPuzzleGame = (function(){
 					thisC.sync();
 				},10);
 			},
+			"reset":function(){
+				this.stop();
+				$("#clock").text("0.0");
+			},
 			"stop":function(){
 				
-				clearInterval(this.tm);
+				if(this.tm) clearInterval(this.tm);
 			},
 			"sync":function(){
 				var time = (new Date()).getTime() - this.stTime;
