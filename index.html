@@ -54,67 +54,102 @@
 	
 	<!-- //meta og -->
 	<script>
-	$(function(){
+	var initSetting = function(){
 		var f = document.form_setting
 		var hash = document.location.hash;
 		var t = document.location.hash.match(/create=(\d)/);
-		var arg = (t && t[1]!= null)?t[1]:null;
+		var arg = (t && t[1]!= null)?t[1]:'4';
 		if(arg != null){
 			$(f.create).find('option[value="'+arg+'"]').attr('selected',"");
-			$(f.create).get(0).onchange();
 		}
-		var t = document.location.hash.match(/image=(\d)/);
-		var arg = (t && t[1]!= null)?t[1]:null;
+		var t = document.location.hash.match(/image=([^,]*)/);
+		var arg = (t && t[1]!= null)?t[1]:'0';
 		if(arg != null){
-			$(f.setBgImage).find('option[value="'+arg+'"]').attr('selected',"");
-			$(f.setBgImage).get(0).onchange();
+			$(f.image).find('option[value="'+arg+'"]').attr('selected',"");
+			$(f.image).get(0).onchange();
 		}
-	})
+		var t = document.location.hash.match(/url=([^,]*)/);
+		var arg = (t && t[1]!= null)?t[1]:'';
+		if(arg != null){
+			$(f.url).val(arg);
+		}
+	};
+	function setSetting(){
+		// console.log("setSetting");
+		var f = document.form_setting
+		spg.setImageUrl(f.url.value); 
+		spg.create(f.create.value,f.create.value);
+		spg.setBgImage(f.image.value);
+	}
+	function hashAction(f){
+		var t = ['create='+f.create.value,'image='+f.image.value,'url='+f.url.value];
+		window.open('#'+t.join(','),'_self');
+	}
+	$(function(){
+		// console.log("onload");
+		$(window).trigger('hashchange');
+	});
+	$(window).on('hashchange',function(){
+		// console.log("hashchange");
+		initSetting();
+		setSetting();
+	});
+
 	</script>
 	
 </head>
 <body>
 	<div class="container">
 		<h1 class="text-center">sliding puzzle<sup><small><a href="" target="_blank" >🚀</a></small></sup></h1>
-		<div class="text-center m-1">
-			<form name="form_setting">
-				<select name="create" class="btn btn-success" onchange="spg.create(parseInt(this.value),parseInt(this.value))">
-					<option value="3" disabled>Size</option>
-					<option value="3">3x3</option>
-					<option value="4" selected>4x4</option>
-					<option value="5">5x5</option>
-					<option value="6">6x6</option>
-					<option value="7">7x7</option>
-				</select>
-				<select name="setBgImage" class="btn btn-info" onchange="spg.setBgImage(this.value)">
-					<option value="0" disabled>Background</option>
-					<option value="0">#0 no image</option>
-					<option value="1">#1 minions</option>
-					<option value="2">#2 minions</option>
-					<option value="3">#3 minions</option>
-					<option value="4">#4 photograpic</option>
-					<option value="5">#5 photograpic</option>
-					<option value="6">#6 photograpic</option>
-					<option value="7">#7 photograpic</option>
-					<option value="8">#8 photograpic</option>
-				</select>	
+		<div class="outbox">
+			<div id="clock" class="mx-auto mb-1">
+				0.0
+			</div>
+			<div id="pzbox">
+				<div id="msgbox">
+					123
+				</div>
+				<div class="pz-grid"></div>
+			</div>
+	
+			<div class="text-center mb-1 mx-auto">
+				<button class="btn btn-warning m-1 btn-md" type="button" onclick="spg.suffle()" ><b>suffle &amp; start</b></button>
+				<button class="btn btn-warning m-1 btn-md" type="button" onclick="if($(this).attr('data-toggle')==null){ spg.showAnswer();$(this).attr('data-toggle','')}else{spg.hideAnswer();$(this).attr('data-toggle',null) }" ><b>Example</b></button>
+				<a class="btn btn-warning m-1 btn-md"  href="http://mins01.com" target="_blank" title="developer homepage" >🏠</a>
+			</div>
+			<form name="form_setting" action="#" onsubmit="hashAction(this);return false;" class="mb-1">
+				
+				<div class="input-group mb-1">
+					<select name="create" class="form-control">
+						<option value="3" disabled>Size</option>
+						<option value="3">3x3</option>
+						<option value="4" selected>4x4</option>
+						<option value="5">5x5</option>
+						<option value="6">6x6</option>
+						<option value="7">7x7</option>
+					</select>	
+					<select name="image" class="form-control " onchange="(this.value=='URL')?$(this.form.url).show():$(this.form.url).hide()">
+						<option value="0" disabled>Background</option>
+						<option value="0">#0 no image</option>
+						<option value="1">#1 minions</option>
+						<option value="2">#2 minions</option>
+						<option value="3">#3 minions</option>
+						<option value="4">#4 photograpic</option>
+						<option value="5">#5 photograpic</option>
+						<option value="6">#6 photograpic</option>
+						<option value="7">#7 photograpic</option>
+						<option value="8">#8 photograpic</option>
+						<option value="URL">#URL</option>
+					</select>	
+					<div class="input-group-append">
+				    <button class="btn btn-success" type="submit">Setting</button>
+				  </div>
+				</div>
+				<input type="url" placeholder="http(s)://.." onchange="spg.setImageUrl(this.value)" class="form-control  " name="url" style="display:none"  />
+
 			</form>
 		</div>
-		<div id="clock" class="mx-auto mb-1">
-			0.0
-		</div>
-		<div id="pzbox">
-			<div id="msgbox">
-				123
-			</div>
-			<div class="pz-grid"></div>
-		</div>
-
-		<div class="text-center mb-1 mx-auto">
-			<button class="btn btn-warning m-1 btn-md" type="button" onclick="spg.suffle()" ><b>suffle &amp; start</b></button>
-			<button class="btn btn-warning m-1 btn-md" type="button" onclick="if($(this).attr('data-toggle')==null){ spg.showAnswer();$(this).attr('data-toggle','')}else{spg.hideAnswer();$(this).attr('data-toggle',null) }" ><b>Example</b></button>
-			<a class="btn btn-warning m-1 btn-md"  href="http://mins01.com" target="_blank" title="developer homepage" >🏠</a>
-		</div>
+		
 		
 	</div>
 </body>

@@ -217,7 +217,16 @@ var SlidingPuzzleGame = (function(){
 				$(this.pzbox).attr("data-bg-image",null);	
 			}else{
 				$(this.pzbox).attr("data-bg-image",n);
+				if(n=='URL'){
+					$(this.pzbox).find(".pz-block").css('backgroundImage','url('+this.image_url+')');
+				}else{
+					$(this.pzbox).find(".pz-block").css('backgroundImage',null);
+				}
 			}
+		},
+		"image_url":"",
+		"setImageUrl":function(image_url){
+			this.image_url = image_url;
 		},
 		"test":{
 			"finish":function(){
