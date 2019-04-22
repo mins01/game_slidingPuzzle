@@ -1,6 +1,8 @@
 var SlidingPuzzleGame = (function(){
-	var sp = null;
+	var version = "0.4";
+	var sp = new SlidingPuzzle(3,3);
 	return {
+		"version":version,
 		"sp":null ,
 		"pzbox":null,
 		"pzGrid":null,
@@ -10,18 +12,22 @@ var SlidingPuzzleGame = (function(){
 			this.stopSuffle();
 		},
 		"create":function(w,h){
+			
 			if(this.isSuffling()){
 				return;
 			}
+			$(this.pzbox).attr("data-status","creating");
+			this.cliclable = false;
 			
 			this.stopSuffle();
-			sp = new SlidingPuzzle(w,h);
+			sp.createPuzzle(w,h)
 			this.sp = sp;
 			this.initAddTags();
 			this.hideAnswer();
 			
 			this.clock.reset();
 			this.msgbox.show("sliding puzzle");
+			$(this.pzbox).attr("data-status","created");
 		},
 		"pzPieces":null,
 		"initTags":function(){
@@ -92,9 +98,12 @@ var SlidingPuzzleGame = (function(){
 		"checkFinish":function(){
 			var thisC = this;
 			if(sp.checkFinish()){
+				thisC.cliclable = false;
 				setTimeout(function(){
 					thisC.clock.stop();
 					thisC.msgbox.show("FINISH!!");
+					thisC.msgbox.hide(2000);
+					$(thisC.pzbox).attr("data-status","finished");
 					// thisC.msgbox.hide(2000);
 				},500);
 				
@@ -117,11 +126,13 @@ var SlidingPuzzleGame = (function(){
 			}
 			this.clock.reset();
 
+			$(thisC.pzbox).attr("data-status","suffling");
 			
 			fns.push(function(){
 				thisC.msgbox.show("shuffling");
 				$(thisC.pzGrid).attr("data-shuffling","");	
 				$(thisC.pzGrid).attr("data-transition-speed","fast");	
+				
 				thisC.cliclable = false;
 			})
 			while(n-- >0){
@@ -144,7 +155,8 @@ var SlidingPuzzleGame = (function(){
 									thisC.cliclable = true;
 									thisC.clock.start();
 									$(thisC.pzGrid).attr("data-shuffling",null);	
-									$(thisC.pzGrid).attr("data-transition-speed",null);	
+									$(thisC.pzGrid).attr("data-transition-speed",null);
+									$(thisC.pzbox).attr("data-status","gaming");
 								});
 							});
 						});
@@ -206,7 +218,15 @@ var SlidingPuzzleGame = (function(){
 			}else{
 				$(this.pzbox).attr("data-bg-image",n);
 			}
-			
+		},
+		"test":{
+			"finish":function(){
+				for(var i=0,m=sp.ks.length;i<m;i++){
+					sp.ks[i]=i;
+				}
+				SlidingPuzzleGame.draw();
+				SlidingPuzzleGame.checkFinish();
+			}
 		}
 		
 		

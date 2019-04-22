@@ -84,9 +84,6 @@
 }
 .pz-piece[data-lastK]{
 	visibility: hidden;
-	opacity: 0.1; 
-	/* pointer-events: none;  */
-	cursor: not-allowed;
 }
 .pz-piece > .pz-block{
 	position: absolute;
@@ -102,7 +99,8 @@
 .pz-piece > .pz-block::before
 {
 	content: attr(data-label);
-	
+	opacity: 1;
+	/* transition: opacity  5s ease-out; */
 	position: absolute;
 	left:0;right:0;bottom:0;top:0;
 	display: flex;
@@ -219,3 +217,34 @@
 .btn[data-toggle]{
 	color:red;
 }
+
+/* FINISH 화면 */
+#pzbox[data-status="finished"][data-bg-image]{
+	
+}
+#pzbox[data-status="finished"] .pz-piece[data-lastK]{
+	visibility: visible;
+}
+#pzbox[data-bg-image] .pz-piece > .pz-block::before
+{
+	transition: opacity  5s ease-out;
+}
+#pzbox[data-status="finished"][data-bg-image] .pz-piece > .pz-block::before{
+	
+	opacity: 0;
+}
+#pzbox[data-status="finished"]::after{
+	content:"fin";
+	position: absolute;
+	right:5px;bottom:5px; font-size:8px;font-weight: bold;
+	color: #000;
+	text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, -2px 0 0 #fff, 2px 0 0 #fff;
+}
+#pzbox[data-status="finished"][data-bg-image] .pz-piece > .pz-block{
+	
+}
+#pzbox[data-status="finished"] .pz-piece{
+	cursor: default;
+}
+
+
