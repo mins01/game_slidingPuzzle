@@ -17,34 +17,35 @@
 	box-sizing: content-box;
 }
 .pz-grid[data-w="3"] > .pz-piece{
-	font-size: 50px;
+	font-size: 70px;
 	width: 100px
 }
 .pz-grid[data-h="3"] > .pz-piece{
 	height: 100px
 }
 .pz-grid[data-w="4"] > .pz-piece{
-	font-size: 30px;
+	font-size: 40px;
 	width: 25%
 }
 .pz-grid[data-h="4"] > .pz-piece{
 	height: 25%
 }
 .pz-grid[data-w="5"] > .pz-piece{
-	font-size: 20px;
+	font-size: 30px;
 	width: 20%
 }
 .pz-grid[data-h="5"] > .pz-piece{
 	height: 20%
 }
 .pz-grid[data-w="6"] > .pz-piece{
-	font-size: 15px;
+	font-size: 20px;
 	width: 16.666666%
 }
 .pz-grid[data-h="6"] > .pz-piece{
 	height: 16.666666%
 }
 .pz-grid[data-w="7"] > .pz-piece{
+	font-size: 14px;
 	width: 14.2857142%
 }
 .pz-grid[data-h="7"] > .pz-piece{
@@ -91,20 +92,25 @@
 	position: absolute;
 	left:0;right:0;bottom:0;top:0;
 	border: 2px solid #fff;
-	margin: 2px;
+	margin: 1px;
 	color: #fff;
-	transition: all  0.2s ease-out;
+	/* transition: all  0.2s ease-out; */
 	border-radius: 10%;
+	box-shadow: 1px 1px 1px #999;
 }
 /* .pz-piece::before */
 .pz-piece > .pz-block::before
 {
 	content: attr(data-label);
+	
 	position: absolute;
 	left:0;right:0;bottom:0;top:0;
 	display: flex;
 	justify-content: center;  /* 가로 중앙 */
 	align-items: center; /* 세로 중앙 */
+	color: #fff;
+	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 -2px 0 #000, 0 2px 0 #000, -2px 0 0 #000, 2px 0 0 #000;
+	
 }
 /* .pz-piece[data-matched]::before */
 .pz-piece[data-matched] > .pz-block::before
@@ -112,7 +118,7 @@
 	border-color: #000;
 	background-color: #fff;
 	color: #000;
-
+	text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, -2px 0 0 #fff, 2px 0 0 #fff;
 }
 /* 이미지 사용시 */
 #pzbox[data-bg-image] .pz-block{
@@ -120,9 +126,16 @@
 	background-repeat: no-repeat;
 	background-size: 300px 300px ;
 	background-color: transparent;
+	border-width: 0;
+	font-size: 0.6em;
 }
 #pzbox[data-bg-image] .pz-block::before{
-	content: none;
+	/* content: none; */
+	opacity: 0.8;
+	background-color: transparent;
+}
+#pzbox[data-bg-image] .pz-piece[data-matched] > .pz-block::before
+{
 }
 #pzbox[data-bg-image="1"] .pz-block{
 	background-image: url("https://scontent-icn1-1.cdninstagram.com/vp/9e47f32e81896d65ef3a1a8659edc3da/5D743D03/t51.2885-15/e35/57799304_431890114228166_6123388005981534783_n.jpg?_nc_ht=scontent-icn1-1.cdninstagram.com");
@@ -133,6 +146,24 @@
 #pzbox[data-bg-image="3"] .pz-block{
 	background-image: url("https://scontent-icn1-1.cdninstagram.com/vp/da7668000012821cad1ea744385c48a1/5D3F4AE8/t51.2885-15/e35/46265852_333913247406259_450068656306401594_n.jpg?_nc_ht=scontent-icn1-1.cdninstagram.com");
 }
+#pzbox[data-bg-image="4"] .pz-block{
+	background-image: url("https://scontent-icn1-1.cdninstagram.com/vp/0536146f60357d0e9f08eb95ebe54153/5D3CDA1F/t51.2885-15/sh0.08/e35/s640x640/36861235_264206724353791_7459078726689488896_n.jpg?_nc_ht=scontent-icn1-1.cdninstagram.com");
+}
+#pzbox[data-bg-image="5"] .pz-block{
+	background-image: url("https://scontent-icn1-1.cdninstagram.com/vp/7809e500123d794429e5d8eb0ddcde92/5D3FF48C/t51.2885-15/sh0.08/e35/s640x640/35428929_326951074507814_781035048248803328_n.jpg?_nc_ht=scontent-icn1-1.cdninstagram.com");
+}
+#pzbox[data-bg-image="6"] .pz-block{
+	background-image: url("https://scontent-icn1-1.cdninstagram.com/vp/87e526323ca7f1355d4325bfee945d8d/5D450B94/t51.2885-15/sh0.08/e35/s640x640/29737792_196866574253744_9223038889126526976_n.jpg?_nc_ht=scontent-icn1-1.cdninstagram.com");
+}
+#pzbox[data-bg-image="7"] .pz-block{
+	background-image: url("https://scontent-icn1-1.cdninstagram.com/vp/c0ebcf98a9c6e28639b759d8ed1eadca/5D40F532/t51.2885-15/sh0.08/e35/s640x640/33432047_1914811315243236_7117512596252524544_n.jpg?_nc_ht=scontent-icn1-1.cdninstagram.com");
+}
+#pzbox[data-bg-image="8"] .pz-block{
+	background-image: url("https://scontent-icn1-1.cdninstagram.com/vp/854e3b5c1d43616e5f196a86c9ba0a64/5CBF8D94/t51.2885-15/e35/39790079_1962441000720878_6323755141908398080_n.jpg?_nc_ht=scontent-icn1-1.cdninstagram.com");
+}
+
+
+
 
 /* 메세지 박스*/
 #msgboxbox{position: relative;
@@ -162,7 +193,6 @@
 	width:300px;
 	box-sizing: content-box;
 	margin:0 auto;
-	margin-bottom: 10px;
 	border:5px solid #000;
 	background-color: #000;
 	color:#fff;

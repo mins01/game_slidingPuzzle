@@ -53,27 +53,54 @@
 	<meta property="og:type" content="game">
 	
 	<!-- //meta og -->
-	
+	<script>
+	$(function(){
+		var f = document.form_setting
+		var hash = document.location.hash;
+		var t = document.location.hash.match(/create=(\d)/);
+		var arg = (t && t[1]!= null)?t[1]:null;
+		if(arg != null){
+			$(f.create).find('option[value="'+arg+'"]').attr('selected',"");
+			$(f.create).get(0).onchange();
+		}
+		var t = document.location.hash.match(/image=(\d)/);
+		var arg = (t && t[1]!= null)?t[1]:null;
+		if(arg != null){
+			$(f.setBgImage).find('option[value="'+arg+'"]').attr('selected',"");
+			$(f.setBgImage).get(0).onchange();
+		}
+	})
+	</script>
 	
 </head>
 <body>
 	<div class="container">
 		<h1 class="text-center">sliding puzzle<sup><small><a href="" target="_blank" >🚀</a></small></sup></h1>
 		<div class="text-center m-1">
-			<button class="btn btn-info m-1" type="button" onclick="spg.create(3,3)" >3x3</button>
-			<button class="btn btn-info m-1" type="button" onclick="spg.create(4,4)" >4x4</button>
-			<button class="btn btn-info m-1" type="button" onclick="spg.create(5,5)" >5x5</button>
-			<button class="btn btn-info m-1" type="button" onclick="spg.create(6,6)" >6x6</button>
-			<button class="btn btn-info m-1" type="button" onclick="spg.create(7,7)" >7x7</button>
+			<form name="form_setting">
+				<select name="create" class="btn btn-success" onchange="spg.create(parseInt(this.value),parseInt(this.value))">
+					<option value="3" disabled>Size</option>
+					<option value="3">3x3</option>
+					<option value="4" selected>4x4</option>
+					<option value="5">5x5</option>
+					<option value="6">6x6</option>
+					<option value="7">7x7</option>
+				</select>
+				<select name="setBgImage" class="btn btn-info" onchange="spg.setBgImage(this.value)">
+					<option value="0" disabled>Background</option>
+					<option value="0">#0 no image</option>
+					<option value="1">#1 minions</option>
+					<option value="2">#2 minions</option>
+					<option value="3">#3 minions</option>
+					<option value="4">#4 photograpic</option>
+					<option value="5">#5 photograpic</option>
+					<option value="6">#6 photograpic</option>
+					<option value="7">#7 photograpic</option>
+					<option value="8">#8 photograpic</option>
+				</select>	
+			</form>
 		</div>
-		<div class="text-center m-1">
-			image <button class="btn btn-info m-1" type="button" onclick="spg.setBgImage(0)" >none</button>
-			<button class="btn btn-info m-1" type="button" onclick="spg.setBgImage(1)" >#1</button>
-			<button class="btn btn-info m-1" type="button" onclick="spg.setBgImage(2)" >#3</button>
-			<button class="btn btn-info m-1" type="button" onclick="spg.setBgImage(3)" >#4</button>
-			
-		</div>
-		<div id="clock">
+		<div id="clock" class="mx-auto mb-1">
 			0.0
 		</div>
 		<div id="pzbox">
@@ -83,7 +110,7 @@
 			<div class="pz-grid"></div>
 		</div>
 
-		<div class="text-center m-1">
+		<div class="text-center mb-1 mx-auto">
 			<button class="btn btn-warning m-1 btn-md" type="button" onclick="spg.suffle()" ><b>suffle &amp; start</b></button>
 			<button class="btn btn-warning m-1 btn-md" type="button" onclick="if($(this).attr('data-toggle')==null){ spg.showAnswer();$(this).attr('data-toggle','')}else{spg.hideAnswer();$(this).attr('data-toggle',null) }" ><b>Example</b></button>
 			<a class="btn btn-warning m-1 btn-md"  href="http://mins01.com" target="_blank" title="developer homepage" >🏠</a>
