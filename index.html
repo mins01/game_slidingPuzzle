@@ -60,12 +60,12 @@
 		var t = document.location.hash.match(/create=(\d)/);
 		var arg = (t && t[1]!= null)?t[1]:'4';
 		if(arg != null){
-			$(f.create).find('option[value="'+arg+'"]').attr('selected',"");
+			$(f.create).find('option[value="'+arg+'"]:not([disabled])').attr('selected',"");
 		}
 		var t = document.location.hash.match(/image=([^,]*)/);
 		var arg = (t && t[1]!= null)?t[1]:'0';
 		if(arg != null){
-			$(f.image).find('option[value="'+arg+'"]').attr('selected',"");
+			$(f.image).find('option[value="'+arg+'"]:not([disabled])').attr('selected',"");
 			$(f.image).get(0).onchange();
 		}
 		var t = document.location.hash.match(/url=([^,]*)/);
