@@ -164,7 +164,7 @@
 	background-image: url("https://scontent-icn1-1.cdninstagram.com/vp/c0ebcf98a9c6e28639b759d8ed1eadca/5D40F532/t51.2885-15/sh0.08/e35/s640x640/33432047_1914811315243236_7117512596252524544_n.jpg?_nc_ht=scontent-icn1-1.cdninstagram.com");
 }
 #pzbox[data-bg-image="8"] .pz-block{
-	background-image: url("https://scontent-icn1-1.cdninstagram.com/vp/854e3b5c1d43616e5f196a86c9ba0a64/5CBF8D94/t51.2885-15/e35/39790079_1962441000720878_6323755141908398080_n.jpg?_nc_ht=scontent-icn1-1.cdninstagram.com");
+	background-image: url("https://scontent-icn1-1.cdninstagram.com/vp/95f072a2073554e76b77294136f66de4/5D5E41B1/t51.2885-15/sh0.08/e35/c0.135.1080.1080a/s640x640/54732312_106834567089953_1656492239143645338_n.jpg?_nc_ht=scontent-icn1-1.cdninstagram.com");
 }
 
 
@@ -278,5 +278,13 @@
 	transform: rotate(180deg);
 }
 #pzbox[data-transformMode="4"]{
-	transform: translateY(-30px) perspective(310px) rotateX(30deg);
+	transform: translateY(-40px) perspective(310px) rotateX(30deg);
+	
+}
+#pzbox[data-transformMode="4"]:not([data-status="finished"]) .pz-grid{
+	box-shadow: 0px 5px 0px #666;;
+}
+
+#pzbox[data-status="finished"]{
+	transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
 }
