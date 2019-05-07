@@ -1,5 +1,10 @@
 @charset "UTF-8";
 /* colors: https://color.adobe.com/ko/explore/most-popular/?time=all%3Ftime%3Dall&page=2*/
+
+.container{
+	overflow: hidden;
+}
+
 #pzbox{
 	position: relative;
 	width: 310px;
@@ -253,4 +258,25 @@
 
 .outbox{
 	width:310px;margin:0 auto;
+}
+
+
+
+#pzbox[data-transformMode]{
+	transition: transform  1s ease-out;
+}
+#pzbox[data-transformMode="0"]{
+	
+}
+#pzbox[data-transformMode="1"]{
+	transform: rotateY(180deg);
+}
+#pzbox[data-transformMode="2"]{
+	transform: rotateX(180deg);
+}
+#pzbox[data-transformMode="3"]{
+	transform: rotate(180deg);
+}
+#pzbox[data-transformMode="4"]{
+	transform: translateY(-30px) perspective(310px) rotateX(30deg);
 }

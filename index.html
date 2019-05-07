@@ -19,7 +19,7 @@
 		
 		gtag('config', 'UA-28167507-1');
 	</script>
-	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<script>
 	     (adsbygoogle = window.adsbygoogle || []).push({
 	          google_ad_client: "ca-pub-5804424351292113",
@@ -90,6 +90,13 @@
 		if(arg != null){
 			$(f.url).val(arg);
 		}
+		
+		var t = document.location.hash.match(/transformMode=([^,]*)/);
+		var arg = (t && t[1]!= null)?t[1]:'0';
+		if(arg != null){
+			$(f.transformMode).find('option[value="'+arg+'"]:not([disabled])').attr('selected',"");
+		}
+		
 	};
 	function setSetting(){
 		// console.log("setSetting");
@@ -97,9 +104,10 @@
 		spg.setImageUrl(f.url.value); 
 		spg.create(f.create.value,f.create.value);
 		spg.setBgImage(f.image.value);
+		spg.setTransformMode(f.transformMode.value);
 	}
 	function hashAction(f){
-		var t = ['create='+f.create.value,'image='+f.image.value,'url='+f.url.value];
+		var t = ['create='+f.create.value,'image='+f.image.value,'url='+f.url.value,'transformMode='+f.transformMode.value];
 		window.open('#'+t.join(','),'_self');
 	}
 	$(function(){
@@ -122,7 +130,7 @@
 			<div id="clock" class="mx-auto mb-1">
 				0.0
 			</div>
-			<div id="pzbox">
+			<div id="pzbox" data-transformMode="0">
 				<div id="msgbox">
 					123
 				</div>
@@ -157,6 +165,14 @@
 						<option value="7">#7 photograpic</option>
 						<option value="8">#8 photograpic</option>
 						<option value="URL">#URL</option>
+					</select>
+					<select name="transformMode" class="form-control" >
+						<option value="" disabled>rotate</option>
+						<option value="0" selected>normal</option>
+						<option value="1">↔️</option>
+						<option value="2">↕️</option>
+						<option value="3">🔄</option>
+						<option value="4">perspective</option>
 					</select>	
 					<div class="input-group-append">
 				    <button class="btn btn-success" type="submit">Setting</button>

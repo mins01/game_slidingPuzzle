@@ -224,6 +224,9 @@ var SlidingPuzzleGame = (function(){
 				}
 			}
 		},
+		"setTransformMode":function(n){
+			$(this.pzbox).attr("data-transformMode",n);	
+		},
 		"image_url":"",
 		"setImageUrl":function(image_url){
 			this.image_url = image_url;
